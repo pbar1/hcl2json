@@ -14,7 +14,9 @@ func main() {
 	outputYAML := false
 	for _, arg := range os.Args {
 		if arg == "-h" || arg == "--help" || arg == "-help" {
-			fmt.Println(`Converts Hashicorp Configuration Langauge (HCL) to JavaScript Object Notation (JSON).
+			fmt.Println(`hcl2json 1.0.0
+
+Converts Hashicorp Configuration Langauge (HCL) to JavaScript Object Notation (JSON).
 Expects input from stdin.
 
 Usage:
