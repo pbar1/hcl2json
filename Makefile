@@ -1,5 +1,5 @@
 BIN := hcl2json
-VERSION := $(shell git describe --tags --always --long --dirty)
+VERSION := $(shell git describe --tags --always --dirty)
 LDFLAGS := -ldflags="-s -w -X main.version=$(VERSION)"
 export CGO_ENABLED := 0
 
