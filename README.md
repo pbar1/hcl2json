@@ -1,5 +1,7 @@
 # `hcl2json`
 
+![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/pbar1/hcl2json/latest?label=docker&style=flat-square)
+
 ### Get
 
 Either download the appropriate binary from the _Releases_ page, or run the following:

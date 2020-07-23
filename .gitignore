@@ -1,3 +1,4 @@
 **/.idea/*
 hcl2json*
 *.tf
+**/.DS_Store
