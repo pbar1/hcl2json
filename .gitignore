@@ -1,2 +1,3 @@
 **/.idea/*
-hcl2json
+hcl2json*
+*.tf
