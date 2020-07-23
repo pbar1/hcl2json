@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -16,68 +15,78 @@ var version string
 
 func main() {
 	outputFormat := "json"
-	for _, arg := range os.Args {
+	filename := "-"
+	for _, arg := range os.Args[1:] {
 		if arg == "-h" || arg == "--help" || arg == "-help" {
 			fmt.Println(`hcl2json
 
 Converts Hashicorp Configuration Langauge (HCL) to JavaScript Object Notation (JSON).
-Expects input from stdin. Can also output YAML, TOML, and XML.
+Can also output YAML and TOML. If multiple output format command line flags and/or
+filename arguments are given, the rightmost wins. If no filename or - is given, reads
+from stdin.'
 
 Usage:
-  cat *.tf | hcl2json
+  hcl2json [FLAGS] [FILENAME]
+
+Examples:
+  Concatenate all Terraform files in a directory convert the result to JSON via stdin
+  > cat *.tf | hcl2json
+
+  Convert single HCL file to YAML
+  > hcl2json -y example.hcl
 
 Flags:
   -h, --help      help for hcl2json
   -v, --version   print program version
   -j, --json      output JSON (default)
   -y, --yaml      output YAML
-  -t, --toml      output TOML
-  -x, --xml       output XML`)
+  -t, --toml      output TOML`)
 			os.Exit(0)
 		}
 		if arg == "-v" || arg == "--version" || arg == "-version" {
 			fmt.Println(version)
-			os.Exit(1)
-		}
-		if arg == "-x" || arg == "--xml" || arg == "-xml" {
-			outputFormat = "xml"
+			os.Exit(0)
 		}
 		if arg == "-t" || arg == "--toml" || arg == "-toml" {
 			outputFormat = "toml"
-		}
-		if arg == "-y" || arg == "--yaml" || arg == "-yaml" {
+		} else if arg == "-y" || arg == "--yaml" || arg == "-yaml" {
 			outputFormat = "yaml"
-		}
-		if arg == "-j" || arg == "--json" || arg == "-json" {
+		} else if arg == "-j" || arg == "--json" || arg == "-json" {
 			outputFormat = "json"
+		} else {
+			filename = arg
 		}
 	}
 
-	in, err := ioutil.ReadAll(os.Stdin)
-	check(err)
+	var in, out []byte
+	var err error
+
+	if filename == "-" {
+		in, err = ioutil.ReadAll(os.Stdin)
+	} else {
+		in, err = ioutil.ReadFile(filename)
+	}
+	check(err, "unable to read input from "+filename)
 
 	var v interface{}
 	err = hcl.Unmarshal(in, &v)
-	check(err)
+	check(err, "unable to unmarshal hcl input from "+filename)
 
-	var out []byte
 	if outputFormat == "json" {
 		out, err = json.Marshal(v)
 	} else if outputFormat == "yaml" {
 		out, err = yaml.Marshal(v)
 	} else if outputFormat == "toml" {
 		out, err = toml.Marshal(v)
-	} else if outputFormat == "xml" {
-		out, err = xml.Marshal(v)
 	}
-	check(err)
+	check(err, "unable to marshal "+outputFormat+" output")
 
 	fmt.Println(string(out))
 }
 
-func check(err error) {
+func check(err error, msg string) {
 	if err != nil {
-		if _, err := fmt.Fprintln(os.Stderr); err != nil {
+		if _, err := fmt.Fprintf(os.Stderr, "%s: %v\n", msg, err); err != nil {
 			panic(err)
 		}
 		os.Exit(1)

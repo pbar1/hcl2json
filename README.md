@@ -2,17 +2,29 @@
 
 ### Usage
 ```
-hcl2json 1.0.0
+hcl2json
 
 Converts Hashicorp Configuration Langauge (HCL) to JavaScript Object Notation (JSON).
-Expects input from stdin.
+Can also output YAML and TOML. If multiple output format command line flags and/or
+filename arguments are given, the rightmost wins. If no filename or - is given, reads
+from stdin.'
 
 Usage:
-  cat *.tf | hcl2json
+  hcl2json [FLAGS] [FILENAME]
+
+Examples:
+  Concatenate all Terraform files in a directory convert the result to JSON via stdin
+  > cat *.tf | hcl2json
+
+  Convert single HCL file to YAML
+  > hcl2json -y example.hcl
 
 Flags:
-  -h, --help   help for hcl2json
-  -y, --yaml   output YAML
+  -h, --help      help for hcl2json
+  -v, --version   print program version
+  -j, --json      output JSON (default)
+  -y, --yaml      output YAML
+  -t, --toml      output TOML
 ```
 
 ### Example
