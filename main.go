@@ -23,7 +23,7 @@ func main() {
 Converts Hashicorp Configuration Langauge (HCL) to JavaScript Object Notation (JSON).
 Can also output YAML and TOML. If multiple output format command line flags and/or
 filename arguments are given, the rightmost wins. If no filename or - is given, reads
-from stdin.'
+from stdin.
 
 Usage:
   hcl2json [FLAGS] [FILENAME]

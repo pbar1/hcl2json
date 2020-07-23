@@ -1,5 +1,13 @@
 # `hcl2json`
 
+### Get
+
+Either download the appropriate binary from the _Releases_ page, or run the following:
+
+```shell script
+docker run --rm pbar1/hcl2json -- --help
+```
+
 ### Usage
 ```
 hcl2json
@@ -29,7 +37,7 @@ Flags:
 
 ### Example
 
-```
+```shell script
 ♪ ~ cat <<EOF | hcl2json | jq
 terraform {          
   required_version = "~> 0.12.0" 
@@ -37,8 +45,10 @@ terraform {
 
 resource "null_resource" "test" {}
 EOF
+```
 
-# outputs the following...
+Outputs the following...
+```json
 {
   "resource": [
     {
