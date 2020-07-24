@@ -1,6 +1,16 @@
 # `hcl2json`
 
-![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/pbar1/hcl2json/latest?label=docker&style=flat-square)
+<p align="left">
+  <a href="https://github.com/pbar1/hcl2json/releases/latest">
+    <img alt="GitHub release" src="https://img.shields.io/github/release/pbar1/hcl2json.svg&style=flat-square">
+  </a>
+  <a href="https://goreportcard.com/report/github.com/pbar1/hcl2json">
+    <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/pbar1/hcl2json&style=flat-square">
+  </a>
+  <a href="https://hub.docker.com/r/pbar1/hcl2json">
+    <img alt="Docker pulls" src="https://img.shields.io/docker/pulls/pbar1/hcl2json.svg&style=flat-square">
+  </a>
+</p>
 
 ### Get
 
